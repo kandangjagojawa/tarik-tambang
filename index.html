@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="jv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>TARIK TAMBANG AKSARA JAWA - Estetik Jawa</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Javanese:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700&family=Cinzel+Decorative:wght@700&family=Elsie:wght@900&display=swap" rel="stylesheet">
+<style>
+:root{
+--kertas:#fdf6e3;
+--sogan:#5d4037;
+--sogan-peteng:#3e2723;
+--emas:#c9a227;
+--emas-muda:#f6e7a8;
+--batik:#d7ccc8;
+--kawung:#efebe9;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--kertas);font-family:'Plus Jakarta Sans',sans-serif}
+body{height:100dvh;width:100vw;position:relative}
+/* Batik kawung pattern halus */
+body::before{
+content:"";position:fixed;inset:0;opacity:0.06;pointer-events:none;
+background-image:
+ radial-gradient(circle at 20px 20px, var(--sogan) 2px, transparent 2.5px),
+ radial-gradient(circle at 0 0, var(--sogan) 2px, transparent 2.5px);
+background-size:40px 40px;
+z-index:0;
+}
+
+/* Level Screen Estetik */
+#levelScreen{
+position:fixed;inset:0;background:linear-gradient(180deg,#fdf6e3 0%,#f5e6c8 60%,#e8d5a8 100%);
+z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;
+padding:22px;text-align:center;overflow:auto;
+}
+.gunungan{
+width:140px;height:90px;background:var(--sogan-peteng);
+clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+position:relative;margin-bottom:10px;
+box-shadow:0 8px 20px rgba(62,39,35,0.3);
+}
+.gunungan::after{
+content:"ꦲꦤꦕꦫꦏ";position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+font-family:'Noto Sans Javanese',sans-serif;color:var(--emas-muda);font-size:14px;letter-spacing:2px;
+}
+#levelScreen h1{
+font-family:'Elsie',serif;font-size:34px;color:var(--sogan-peteng);line-height:0.9;letter-spacing:-0.5px;
+text-shadow:2px 2px 0 var(--emas-muda);
+}
+#levelScreen h1 span{display:block;font-family:'Cinzel Decorative',serif;font-size:13px;letter-spacing:4px;color:var(--sogan);margin-top:6px;text-shadow:none;font-weight:700}
+.tagline{font-size:13px;color:var(--sogan);margin:10px 0 16px;letter-spacing:0.5px;font-style:italic}
+.cara{
+font-size:12.5px;color:var(--sogan-peteng);background:rgba(255,255,255,0.85);
+border:1.5px solid var(--emas);border-radius:16px;padding:14px 16px;max-width:360px;line-height:1.5;
+backdrop-filter:blur(6px);box-shadow:0 4px 20px rgba(62,39,35,0.08), inset 0 1px 0 #fff;
+position:relative;
+}
+.cara::before{content:"❧";position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--kertas);padding:0 8px;color:var(--emas);font-size:14px}
+.levelBtn{
+width:100%;max-width:340px;padding:15px 18px;margin:7px 0;border:none;border-radius:14px;
+font-size:15px;font-weight:700;cursor:pointer;position:relative;z-index:10000;
+background:linear-gradient(180deg,var(--sogan) 0%, var(--sogan-peteng) 100%);color:#fff;
+box-shadow:0 4px 0 #281a16, 0 8px 20px rgba(62,39,35,0.25);
+border:1px solid rgba(201,162,39,0.3);
+letter-spacing:0.3px;transition:transform .1s;
+}
+.levelBtn::after{content:"";position:absolute;inset:3px;border:1px dashed rgba(246,231,168,0.3);border-radius:11px;pointer-events:none}
+.levelBtn:active{transform:translateY(2px);box-shadow:0 2px 0 #281a16, 0 4px 10px rgba(62,39,35,0.2)}
+.levelBtn.l2{background:linear-gradient(180deg,#6d4c41 0%, #4e342e 100%)}
+.levelBtn.l3{background:linear-gradient(180deg,#8d6e63 0%, #5d4037 100%)}
+.levelBtn .kecil{display:block;font-size:10px;font-weight:400;opacity:0.8;margin-top:2px;letter-spacing:0.5px}
+
+/* Game Layout */
+#game{flex:1;display:none;flex-direction:column;height:100dvh;overflow:hidden;position:relative;z-index:1}
+
+/* Player Card Estetik */
+.player{flex:1;display:flex;flex-direction:column;padding:8px 10px;overflow:hidden;min-height:0;position:relative}
+.player::before{
+content:"";position:absolute;top:6px;left:10px;right:10px;bottom:6px;
+border:1.5px solid rgba(201,162,39,0.25);border-radius:18px;pointer-events:none;
+}
+#topPlayer{transform:rotate(180deg);background:linear-gradient(180deg,#efebe9 0%,#d7ccc8 100%)}
+#bottomPlayer{background:linear-gradient(180deg,#ffffff 0%,#fdf6e3 100%)}
+
+.playerHeader{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--sogan);flex-shrink:0;letter-spacing:0.8px;text-transform:uppercase;font-weight:700}
+.biji{
+font-weight:700;color:var(--sogan-peteng);background:linear-gradient(180deg,#fff 0%,#f6e7a8 100%);
+padding:3px 10px;border-radius:20px;border:1px solid var(--emas);font-size:11px;
+box-shadow:0 2px 6px rgba(201,162,39,0.2);
+}
+.tembung{text-align:center;margin:3px 0 2px;flex-shrink:0}
+.tembung .label{font-size:8px;color:var(--sogan);letter-spacing:1px;text-transform:uppercase}
+.tembung .latin{font-size:17px;font-weight:700;color:var(--sogan-peteng);text-transform:lowercase;letter-spacing:-0.2px}
+
+.progressAksara{
+text-align:center;font-family:'Noto Sans Javanese',sans-serif;font-size:21px;min-height:28px;
+line-height:1.6;color:var(--sogan-peteng);white-space:nowrap;overflow:hidden;flex-shrink:0;
+background:rgba(255,255,255,0.6);border-radius:20px;margin:2px 20px;padding:2px 0;
+border:1px dashed rgba(141,110,99,0.2);
+}
+.progressAksara .kosong{color:#bcaaa4;opacity:0.6}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:5px;flex:1;align-content:start;min-height:0}
+.kotak{
+height:54px;background:linear-gradient(180deg,#ffffff 0%,#fdf6e3 100%);
+border:1.5px solid #a1887f;border-radius:12px;
+font-family:'Noto Sans Javanese',sans-serif;font-size:18px;
+display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;
+line-height:1.8;box-shadow:0 3px 0 #d7ccc8, 0 4px 12px rgba(62,39,35,0.06);
+position:relative;transition:all .12s;
+}
+.kotak::before{
+content:"";position:absolute;inset:4px;border:1px dotted rgba(201,162,39,0.2);border-radius:8px;pointer-events:none;
+}
+.kotak:active{transform:translateY(2px) scale(0.97);box-shadow:0 1px 0 #d7ccc8}
+.kotak.salah{animation:shake .3s;background:linear-gradient(180deg,#ffebee 0%,#ffcdd2 100%);border-color:#e57373}
+
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+/* Tengah - Tali estetik */
+#tengah{
+height:14%;min-height:74px;max-height:86px;
+background:linear-gradient(90deg,#d7ccc8 0%,#efebe9 20%,#d7ccc8 50%,#efebe9 80%,#d7ccc8 100%);
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+position:relative;border-top:2px solid var(--emas);border-bottom:2px solid var(--emas);
+flex-shrink:0;box-shadow:inset 0 2px 10px rgba(0,0,0,0.05);
+}
+.tali{
+width:88%;height:10px;background:linear-gradient(180deg,#8d6e63 0%,#5d4037 50%,#3e2723 100%);
+border-radius:5px;position:relative;box-shadow:0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.tali::before{
+content:"";position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,0.2),transparent);border-radius:5px;
+}
+.penanda{
+position:absolute;top:50%;left:50%;width:22px;height:22px;
+background:radial-gradient(circle at 30% 30%, #f6e7a8, #c9a227 40%, #8d6e63 100%);
+border:2.5px solid #fff;border-radius:50%;
+transform:translate(-50%,-50%);transition:left .45s cubic-bezier(.34,1.56,.64,1);
+box-shadow:0 2px 8px rgba(0,0,0,0.35), 0 0 0 2px var(--sogan-peteng);
+}
+.bendera{position:absolute;top:-15px;font-size:9px;color:var(--sogan-peteng);font-weight:700;letter-spacing:0.5px;background:var(--emas-muda);padding:2px 6px;border-radius:10px;border:1px solid var(--emas)}
+.bendera.kiri{left:8px}.bendera.kanan{right:8px}
+
+/* Modal estetik */
+#modal{position:fixed;inset:0;background:radial-gradient(circle at center, rgba(253,246,227,0.9) 0%, rgba(62,39,35,0.92) 100%);z-index:10001;display:none;align-items:center;justify-content:center;padding:22px;backdrop-filter:blur(8px)}
+#modalBox{
+background:linear-gradient(180deg,#ffffff 0%,#fdf6e3 100%);
+border-radius:22px;padding:26px 20px;max-width:340px;width:100%;text-align:center;
+border:2px solid var(--emas);box-shadow:0 20px 50px rgba(62,39,35,0.4), inset 0 1px 0 #fff;
+position:relative;
+}
+#modalBox::before{content:"꧁";position:absolute;top:12px;left:16px;color:var(--emas);font-family:'Noto Sans Javanese';font-size:18px}
+#modalBox::after{content:"꧂";position:absolute;top:12px;right:16px;color:var(--emas);font-family:'Noto Sans Javanese';font-size:18px}
+#modalBox h2{font-family:'Elsie',serif;font-size:22px;color:var(--sogan-peteng);margin-bottom:6px}
+#modalBox p{font-size:12.5px;color:var(--sogan);margin-bottom:18px;line-height:1.4}
+.modalBtn{width:100%;padding:13px;margin:6px 0;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:14px;transition:transform .1s}
+.modalBtn:active{transform:scale(0.97)}
+.btnBaleni{background:linear-gradient(180deg,var(--sogan) 0%, var(--sogan-peteng) 100%);color:#fff;box-shadow:0 3px 0 #281a16}
+.btnGanti{background:#fff;color:var(--sogan-peteng);border:1.5px solid var(--batik)}
+
+#btnGantiTop{position:absolute;top:5px;right:8px;z-index:20;font-size:9px;padding:5px 10px;border-radius:20px;border:1px solid var(--emas);background:linear-gradient(180deg,#fff,#fdf6e3);color:var(--sogan);font-weight:700}
+</style>
+</head>
+<body>
+<div id="levelScreen">
+<div class="gunungan"></div>
+<h1>TARIK TAMBANG<span>AKSARA JAWA</span></h1>
+<div class="tagline">Sapa sing paling cepet narik — estetik Jawa</div>
+<div class="cara">
+<b>Carane dolanan:</b><br>
+Deloken tembung latin, pencet aksara siji-siji nganti dadi tembung Jawa sing bener.<br>
+Sapa sing cepet rampung, bakal narik tambange nganggo kekuwatan aksara.
+</div>
+<button class="levelBtn" onclick="mulaiGame(1)">Level 1 - 3 tembung<span class="kecil">Sinau alon-alon</span></button>
+<button class="levelBtn l2" onclick="mulaiGame(2)">Level 2 - 5 tembung<span class="kecil">Tambah seru</span></button>
+<button class="levelBtn l3" onclick="mulaiGame(3)">Level 3 - Tarik nganti entek<span class="kecil">Duel tanpa wates</span></button>
+</div>
+
+<div id="game">
+<div id="topPlayer" class="player">
+<button id="btnGantiTop" onclick="baliMenyangLevel()">Ganti level</button>
+<div class="playerHeader"><span>ꦥꦼꦩꦻꦤ꧀ Pemain nduwur</span><span class="biji" id="skorAtas">Biji: 0</span></div>
+<div class="tembung"><div class="label">Tembunge</div><div class="latin" id="latinAtas">-</div></div>
+<div class="progressAksara" id="progAtas">_ _</div>
+<div class="grid" id="gridAtas"></div>
+</div>
+<div id="tengah"><div class="bendera kiri">▲ NDUWUR</div><div class="bendera kanan">NGISOR ▲</div><div class="tali"><div class="penanda" id="penanda"></div></div></div>
+<div id="bottomPlayer" class="player">
+<div class="playerHeader"><span>ꦥꦼꦩꦻꦤ꧀ Pemain ngisor</span><span class="biji" id="skorNgisor">Biji: 0</span></div>
+<div class="tembung"><div class="label">Tembunge</div><div class="latin" id="latinNgisor">-</div></div>
+<div class="progressAksara" id="progNgisor">_ _</div>
+<div class="grid" id="gridNgisor"></div>
+</div>
+</div>
+
+<div id="modal"><div id="modalBox"><h2 id="modalJudul">Pemain ngisor menang!</h2><p id="modalIsi">Hebat tenan!</p><button class="modalBtn btnBaleni" onclick="baleniLevel()">Baleni level iki</button><button class="modalBtn btnGanti" onclick="baliMenyangLevel()">Ganti level</button></div></div>
+
+<script>
+const KATA=[
+{"latin":"kula","partsAksara":["ꦏꦸ","ꦭ"]},
+{"latin":"sega","partsAksara":["ꦱꦼ","ꦒ"]},
+{"latin":"sapa","partsAksara":["ꦱ","ꦥ"]},
+{"latin":"apa","partsAksara":["ꦲ","ꦥ"]},
+{"latin":"siji","partsAksara":["ꦱꦶ","ꦗꦶ"]},
+{"latin":"loro","partsAksara":["ꦭꦺꦴ","ꦫꦺꦴ"]},
+{"latin":"lara","partsAksara":["ꦭ","ꦫ"]},
+{"latin":"telu","partsAksara":["ꦠꦼ","ꦭꦸ"]},
+{"latin":"papat","partsAksara":["ꦥ","ꦥꦠ꧀"]},
+{"latin":"lima","partsAksara":["ꦭꦶ","ꦩ"]},
+{"latin":"enem","partsAksara":["ꦲꦼ","ꦤꦼꦩ꧀"]},
+{"latin":"pitu","partsAksara":["ꦥꦶ","ꦠꦸ"]},
+{"latin":"wolu","partsAksara":["ꦮꦺꦴ","ꦭꦸ"]},
+{"latin":"sanga","partsAksara":["ꦱ","ꦔ"]},
+{"latin":"banyu","partsAksara":["ꦧ","ꦚꦸ"]},
+{"latin":"geni","partsAksara":["ꦒꦼ","ꦤꦶ"]},
+{"latin":"lemah","partsAksara":["ꦭꦺ","ꦩꦃ"]},
+{"latin":"watu","partsAksara":["ꦮ","ꦠꦸ"]},
+{"latin":"kayu","partsAksara":["ꦏ","ꦪꦸ"]},
+{"latin":"godhong","partsAksara":["ꦒꦺꦴ","ꦝꦺꦴꦁ"]},
+{"latin":"sekar","partsAksara":["ꦱꦼ","ꦏꦂ"]},
+{"latin":"oyot","partsAksara":["ꦲꦺꦴ","ꦪꦺꦴꦠ꧀"]},
+{"latin":"alas","partsAksara":["ꦲ","ꦭꦱ꧀"]},
+{"latin":"kali","partsAksara":["ꦏ","ꦭꦶ"]},
+{"latin":"rawa","partsAksara":["ꦫ","ꦮ"]},
+{"latin":"sawah","partsAksara":["ꦱ","ꦮꦃ"]},
+{"latin":"tegal","partsAksara":["ꦠꦼ","ꦒꦭ꧀"]},
+{"latin":"omah","partsAksara":["ꦲꦺꦴ","ꦩꦃ"]},
+{"latin":"lawang","partsAksara":["ꦭ","ꦮꦁ"]},
+{"latin":"meja","partsAksara":["ꦩꦺ","ꦗ"]},
+{"latin":"tikar","partsAksara":["ꦠꦶ","ꦏꦂ"]},
+{"latin":"piring","partsAksara":["ꦥꦶ","ꦫꦶꦁ"]},
+{"latin":"gelas","partsAksara":["ꦒꦼ","ꦭꦱ꧀"]},
+{"latin":"garpu","partsAksara":["ꦒꦂ","ꦥꦸ"]},
+{"latin":"waras","partsAksara":["ꦮ","ꦫꦱ꧀"]},
+{"latin":"mumet","partsAksara":["ꦩꦸ","ꦩꦼꦠ꧀"]},
+{"latin":"kesel","partsAksara":["ꦏꦼ","ꦱꦼꦭ꧀"]},
+{"latin":"bungah","partsAksara":["ꦧꦸ","ꦔꦃ"]},
+{"latin":"susah","partsAksara":["ꦱꦸ","ꦱꦃ"]},
+{"latin":"seneng","partsAksara":["ꦱꦼ","ꦤꦼꦁ"]},
+{"latin":"sedhih","partsAksara":["ꦱꦼ","ꦝꦶꦃ"]},
+{"latin":"nesu","partsAksara":["ꦤꦼ","ꦱꦸ"]},
+{"latin":"guyu","partsAksara":["ꦒꦸ","ꦪꦸ"]},
+{"latin":"bocah","partsAksara":["ꦧꦺꦴ","ꦕꦃ"]},
+{"latin":"lare","partsAksara":["ꦭ","ꦫꦺ"]},
+{"latin":"dulur","partsAksara":["ꦢꦸ","ꦭꦸꦂ"]},
+{"latin":"tamu","partsAksara":["ꦠ","ꦩꦸ"]},
+{"latin":"teka","partsAksara":["ꦠꦼ","ꦏ"]},
+{"latin":"mantu","partsAksara":["ꦩꦤ꧀","ꦠꦸ"]},
+{"latin":"besan","partsAksara":["ꦧꦺ","ꦱꦤ꧀"]},
+{"latin":"wayah","partsAksara":["ꦮ","ꦪꦃ"]},
+{"latin":"esuk","partsAksara":["ꦲꦼ","ꦱꦸꦏ꧀"]},
+{"latin":"awan","partsAksara":["ꦲ","ꦮꦤ꧀"]},
+{"latin":"sore","partsAksara":["ꦱꦺꦴ","ꦫꦺ"]},
+{"latin":"bengi","partsAksara":["ꦧꦼ","ꦔꦶ"]},
+{"latin":"dina","partsAksara":["ꦢꦶ","ꦤ"]},
+{"latin":"wulan","partsAksara":["ꦮꦸ","ꦭꦤ꧀"]},
+{"latin":"taun","partsAksara":["ꦠ","ꦲꦸꦤ꧀"]},
+{"latin":"mangsa","partsAksara":["ꦩꦁ","ꦱ"]},
+{"latin":"garing","partsAksara":["ꦒ","ꦫꦶꦁ"]},
+{"latin":"teles","partsAksara":["ꦠꦼ","ꦭꦼꦱ꧀"]},
+{"latin":"adhem","partsAksara":["ꦲ","ꦝꦼꦩ꧀"]},
+{"latin":"anget","partsAksara":["ꦲ","ꦔꦼꦠ꧀"]},
+{"latin":"sumuk","partsAksara":["ꦱꦸ","ꦩꦸꦏ꧀"]},
+{"latin":"padhang","partsAksara":["ꦥ","ꦝꦁ"]},
+{"latin":"peteng","partsAksara":["ꦥꦼ","ꦠꦼꦁ"]},
+{"latin":"resik","partsAksara":["ꦫꦼ","ꦱꦶꦏ꧀"]},
+{"latin":"reged","partsAksara":["ꦫꦼ","ꦒꦼꦢ꧀"]},
+{"latin":"omber","partsAksara":["ꦲꦺꦴꦩ꧀","ꦧꦼꦂ"]},
+{"latin":"ciut","partsAksara":["ꦕꦶ","ꦲꦸꦠ꧀"]},
+{"latin":"jembar","partsAksara":["ꦗꦼꦩ꧀","ꦧꦂ"]},
+{"latin":"alus","partsAksara":["ꦲ","ꦭꦸꦱ꧀"]},
+{"latin":"kasar","partsAksara":["ꦏ","ꦱꦂ"]},
+{"latin":"landhep","partsAksara":["ꦭꦤ꧀","ꦝꦼꦥ꧀"]},
+{"latin":"kethul","partsAksara":["ꦏꦼ","ꦛꦸꦭ꧀"]},
+{"latin":"abot","partsAksara":["ꦲ","ꦧꦺꦴꦠ꧀"]},
+{"latin":"entheng","partsAksara":["ꦲꦼꦤ꧀","ꦛꦼꦁ"]},
+{"latin":"dawa","partsAksara":["ꦢ","ꦮ"]},
+{"latin":"cendhak","partsAksara":["ꦕꦼꦤ꧀","ꦝꦏ꧀"]},
+{"latin":"dhuwur","partsAksara":["ꦝꦸ","ꦮꦸꦂ"]},
+{"latin":"endhek","partsAksara":["ꦲꦼꦤ꧀","ꦝꦼꦏ꧀"]},
+{"latin":"cedhak","partsAksara":["ꦕꦼ","ꦝꦏ꧀"]},
+{"latin":"adoh","partsAksara":["ꦲ","ꦢꦺꦴꦃ"]},
+{"latin":"kiwa","partsAksara":["ꦏꦶ","ꦮ"]},
+{"latin":"tengen","partsAksara":["ꦠꦼ","ꦔꦼꦤ꧀"]},
+{"latin":"ngarep","partsAksara":["ꦔ","ꦫꦼꦥ꧀"]},
+{"latin":"mburi","partsAksara":["ꦩ꧀ꦧꦸ","ꦫꦶ"]},
+{"latin":"nduwur","partsAksara":["ꦤ꧀ꦝꦸ","ꦮꦸꦂ"]},
+{"latin":"ngisor","partsAksara":["ꦔꦶ","ꦱꦺꦴꦂ"]},
+{"latin":"njero","partsAksara":["ꦚ꧀ꦗꦺ","ꦫꦺꦴ"]},
+{"latin":"njaba","partsAksara":["ꦚ꧀ꦗ","ꦧ"]},
+{"latin":"kene","partsAksara":["ꦏꦺ","ꦤꦺ"]},
+{"latin":"kono","partsAksara":["ꦏꦺꦴ","ꦤꦺꦴ"]},
+{"latin":"kana","partsAksara":["ꦏ","ꦤ"]},
+{"latin":"ngendi","partsAksara":["ꦔꦼ","ꦤ꧀ꦢꦶ"]},
+{"latin":"kapan","partsAksara":["ꦏ","ꦥꦤ꧀"]},
+{"latin":"pira","partsAksara":["ꦥꦶ","ꦫ"]},
+{"latin":"piye","partsAksara":["ꦥꦶ","ꦪꦺ"]},
+{"latin":"sopo","partsAksara":["ꦱꦺꦴ","ꦥꦺꦴ"]},
+{"latin":"kowe","partsAksara":["ꦏꦺꦴ","ꦮꦺ"]},
+{"latin":"kita","partsAksara":["ꦏꦶ","ꦠ"]},
+{"latin":"nampa","partsAksara":["ꦤ","ꦩ꧀ꦥ"]},
+{"latin":"tanpa","partsAksara":["ꦠꦤ꧀","ꦥ"]},
+{"latin":"ganda","partsAksara":["ꦒꦤ꧀","ꦢ"]},
+{"latin":"canda","partsAksara":["ꦕꦤ꧀","ꦢ"]},
+{"latin":"tamba","partsAksara":["ꦠꦩ꧀","ꦧ"]},
+{"latin":"angka","partsAksara":["ꦲꦁ","ꦏ"]},
+{"latin":"jambe","partsAksara":["ꦗꦩ꧀","ꦧꦺ"]},
+{"latin":"kanca","partsAksara":["ꦏꦤ꧀","ꦕ"]},
+{"latin":"blanja","partsAksara":["ꦧ꧀ꦭꦤ꧀","ꦗ"]},
+{"latin":"klasa","partsAksara":["ꦏ꧀ꦭ","ꦱ"]},
+{"latin":"mangga","partsAksara":["ꦩꦁ","ꦒ"]},
+{"latin":"nangka","partsAksara":["ꦤꦁ","ꦏ"]},
+{"latin":"kembang","partsAksara":["ꦏꦼꦩ꧀","ꦧꦁ"]},
+{"latin":"pandan","partsAksara":["ꦥꦤ꧀","ꦢꦤ꧀"]},
+{"latin":"bandha","partsAksara":["ꦧꦤ꧀","ꦝ"]},
+{"latin":"tanda","partsAksara":["ꦠꦤ꧀","ꦢ"]},
+{"latin":"sembah","partsAksara":["ꦱꦼꦩ꧀","ꦧꦃ"]},
+{"latin":"gembok","partsAksara":["ꦒꦼꦩ꧀","ꦧꦺꦴꦏ꧀"]},
+{"latin":"tanduk","partsAksara":["ꦠꦤ꧀","ꦝꦸꦏ꧀"]},
+{"latin":"tumbuk","partsAksara":["ꦠꦸꦩ꧀","ꦧꦸꦏ꧀"]},
+{"latin":"santun","partsAksara":["ꦱꦤ꧀","ꦠꦸꦤ꧀"]},
+{"latin":"kempul","partsAksara":["ꦏꦼꦩ꧀","ꦥꦸꦭ꧀"]},
+{"latin":"gondok","partsAksara":["ꦒꦺꦴꦤ꧀","ꦝꦺꦴꦏ꧀"]},
+{"latin":"bengkok","partsAksara":["ꦧꦺꦁ","ꦏꦺꦴꦏ꧀"]},
+{"latin":"jenggot","partsAksara":["ꦗꦼꦁ","ꦒꦺꦴꦠ꧀"]},
+{"latin":"senthong","partsAksara":["ꦱꦼꦤ꧀","ꦛꦺꦴꦁ"]},
+{"latin":"kentheng","partsAksara":["ꦏꦼꦤ꧀","ꦛꦼꦁ"]},
+{"latin":"gendheng","partsAksara":["ꦒꦼꦤ꧀","ꦝꦼꦁ"]},
+{"latin":"kendhang","partsAksara":["ꦏꦼꦤ꧀","ꦝꦁ"]},
+{"latin":"bengkel","partsAksara":["ꦧꦺꦁ","ꦏꦼꦭ꧀"]},
+{"latin":"jempol","partsAksara":["ꦗꦼꦩ꧀","ꦥꦺꦴꦭ꧀"]},
+{"latin":"kempit","partsAksara":["ꦏꦼꦩ꧀","ꦥꦶꦠ꧀"]},
+{"latin":"sumping","partsAksara":["ꦱꦸꦩ꧀","ꦥꦶꦁ"]},
+{"latin":"sangu","partsAksara":["ꦱ","ꦔꦸ"]},
+{"latin":"jamu","partsAksara":["ꦗ","ꦩꦸ"]},
+{"latin":"boto","partsAksara":["ꦧꦺꦴ","ꦠꦺꦴ"]},
+{"latin":"soto","partsAksara":["ꦱꦺꦴ","ꦠꦺꦴ"]}
+];
+let urutan=[],idx=0,level=1,skor={atas:0,ngisor:0},tali=0,saiki=null;
+let pemain={atas:{i:0,built:[],opsi:[],lock:false},ngisor:{i:0,built:[],opsi:[],lock:false}};
+function acak(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function gaweUrutan(){urutan=acak([...Array(KATA.length).keys()]);idx=0}
+function jupuk(){if(idx>=urutan.length)gaweUrutan();return KATA[urutan[idx++]]}
+function opsi(bener){let pool=[];while(pool.length<30){let k=KATA[Math.floor(Math.random()*KATA.length)];let p=k.partsAksara[Math.floor(Math.random()*k.partsAksara.length)];if(p!==bener&&!pool.includes(p))pool.push(p)}return acak([bener,...pool.slice(0,3)])}
+function render(nama){
+let p=pemain[nama];let prog=document.getElementById(nama==='atas'?'progAtas':'progNgisor');let grid=document.getElementById(nama==='atas'?'gridAtas':'gridNgisor');let lat=document.getElementById(nama==='atas'?'latinAtas':'latinNgisor');if(!saiki)return;lat.textContent=saiki.latin;let t='';for(let i=0;i<saiki.partsAksara.length;i++){if(i<p.built.length)t+=p.built[i];else t+='<span class="kosong">_ </span>'}prog.innerHTML=t||'<span class="kosong">_ _</span>';grid.innerHTML='';p.opsi.forEach(a=>{let d=document.createElement('div');d.className='kotak';d.textContent=a;d.onclick=()=>pencet(nama,a,d);grid.appendChild(d)})}
+function anyar(){saiki=jupuk();pemain.atas.i=0;pemain.atas.built=[];pemain.ngisor.i=0;pemain.ngisor.built=[];pemain.atas.opsi=opsi(saiki.partsAksara[0]);pemain.ngisor.opsi=opsi(saiki.partsAksara[0]);renderAll()}
+function renderAll(){render('atas');render('ngisor');document.getElementById('skorAtas').textContent='Biji: '+skor.atas;document.getElementById('skorNgisor').textContent='Biji: '+skor.ngisor;document.getElementById('penanda').style.left=(50+(tali/2))+'%'}
+function pencet(nama,aks,el){let p=pemain[nama];if(p.lock)return;let bener=saiki.partsAksara[p.i];if(aks===bener){p.built.push(aks);p.i++;if(p.i>=saiki.partsAksara.length){skor[nama]++;tali+=(nama==='ngisor'?18:-18);if(level===1&&skor[nama]>=3)menang(nama);else if(level===2&&skor[nama]>=5)menang(nama);else if(level===3&&(tali>=100||tali<=-100))menang(tali>=100?'ngisor':'atas');else anyar()}else{p.opsi=opsi(saiki.partsAksara[p.i]);render(nama)}}else{el.classList.add('salah');p.lock=true;setTimeout(()=>{el.classList.remove('salah');p.lock=false},380)}document.getElementById('skorAtas').textContent='Biji: '+skor.atas;document.getElementById('skorNgisor').textContent='Biji: '+skor.ngisor;document.getElementById('penanda').style.left=(50+(tali/2))+'%'}
+function menang(n){document.getElementById('modalJudul').textContent=n==='ngisor'?'Pemain ngisor menang!':'Pemain nduwur menang!';document.getElementById('modalIsi').textContent=level===3?'Tali ketarik nganti entek. Maturnuwun!':'Kowe paling cepet nyusun aksara. Sae!';document.getElementById('modal').style.display='flex'}
+function mulaiGame(lv){level=lv;skor={atas:0,ngisor:0};tali=0;gaweUrutan();document.getElementById('levelScreen').style.display='none';document.getElementById('game').style.display='flex';document.getElementById('modal').style.display='none';anyar()}
+function baleniLevel(){document.getElementById('modal').style.display='none';skor={atas:0,ngisor:0};tali=0;gaweUrutan();anyar()}
+function baliMenyangLevel(){document.getElementById('modal').style.display='none';document.getElementById('game').style.display='none';document.getElementById('levelScreen').style.display='flex';skor={atas:0,ngisor:0};tali=0}
+gaweUrutan();
+</script>
+</body>
+</html>
