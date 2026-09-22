@@ -161,6 +161,9 @@ position:relative;
 .btnGanti{background:#fff;color:var(--sogan-peteng);border:1.5px solid var(--batik)}
 
 #btnGantiTop{position:absolute;top:5px;right:8px;z-index:20;font-size:9px;padding:5px 10px;border-radius:20px;border:1px solid var(--emas);background:linear-gradient(180deg,#fff,#fdf6e3);color:var(--sogan);font-weight:700}
+#footerGame{height:38px;min-height:38px;max-height:42px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#fdf6e3 0%,#f5e6c8 100%);border-top:1.5px solid var(--emas);flex-shrink:0;position:relative;z-index:5}
+.footerBtn{font-size:11px;font-weight:700;color:var(--sogan-peteng);background:rgba(255,255,255,0.9);border:1.5px solid var(--emas);padding:6px 14px;border-radius:20px;cursor:pointer;letter-spacing:0.3px;box-shadow:0 2px 6px rgba(62,39,35,0.12);transition:transform .1s}
+.footerBtn:active{transform:scale(0.96)}
 </style>
 </head>
 <body>
@@ -192,6 +195,9 @@ Sapa sing cepet rampung, bakal narik tambange nganggo kekuwatan aksara.
 <div class="tembung"><div class="label">Tembunge</div><div class="latin" id="latinNgisor">-</div></div>
 <div class="progressAksara" id="progNgisor">_ _</div>
 <div class="grid" id="gridNgisor"></div>
+</div>
+<div id="footerGame">
+<button class="footerBtn" onclick="baliMenyangLevel()">꧁ Bali menyang halaman ngarep - Ganti level ꧂</button>
 </div>
 </div>
 
